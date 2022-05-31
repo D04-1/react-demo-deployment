@@ -1,70 +1,123 @@
-# Getting Started with Create React App
+# Deployment von einer React App: 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Wann und Was:
 
-## Available Scripts
+Verwende [`create-react-app`](https://create-react-app.dev/)
 
-In the project directory, you can run:
+Wir werden mit [`gh-pages`](https://github.com/tschaub/gh-pages) arbeiten. 
 
-### `npm start`
+Und das Projekt auf [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages) hosten. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+## 1.  Ein neues Projekt machen auf GitHub 
+1. Wir brauchen ein leeres Repo auf GitHub. Erstelle das neue Repo unter deinem eigenen Account. Das Repo muss öffentlich/'public' sein, wenn du kein Pro-Account hast. 
+2. Initializier das Projekt ohne Inhalt (kein `README.md`, `.gitignore`, `LICENSE`  oder andere Datei auswählen)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## 2. Erstelle ein Projekt mit React app
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Verwende    
+ ```shell
+    $ npx create-react-app my-app
+ ```
+   
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Navigiere zu dem Ordner mit dem neuen Projekt:
+  
+    ```shell
+    $ cd my-app
+    ```
+    
+3. Und mache das Projekt mit VS Code auf; 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+    ```shell
+    $ code .
+    ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4. Installiere [`gh-pages`](https://github.com/tschaub/gh-pages) mit npm
+    ```shell
+    $ npm install gh-pages --save-dev
+    ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+5. Füge ein Feld für`homepage` ein in der `package.json` Datei.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    1. Öffne die `package.json` Datei.
+   
 
-## Learn More
+    2. Füge `"homepage"` hinzu in diesem Format `https://{deinUsername}.github.io/{repo-name}`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    ```diff
+    {
+      "name": "my-app",
+      "version": "0.1.0",
+    + "homepage": "https://gitname.github.io/react-gh-pages",
+      "private": true,
+    ```
+6. Füge deployment Scripts  hinzu zu der `package.json` Datei.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+    1. In der `package.json` Datei:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+    2. Füge ein Feld für `predeploy` und ein für `deploy` ein im `scripts` Objekt:
 
-### Analyzing the Bundle Size
+    ```diff
+    "scripts": {
+    +   "predeploy": "npm run build",
+    +   "deploy": "gh-pages -d build",
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+7. Füge ein "remote" hinzu, das zu dein  GitHub repository zeigt. 
 
-### Making a Progressive Web App
+    
+    ```shell
+    $ git remote add origin https://github.com/{username}/{repo-name}.git
+    ```
+    
+  Ersetzte {username} mit deinem Namen und {repo-name} mit dem Namen von deinem Repo. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+8. Deploye die React app zu GitHub Pages
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
+    ```shell
+    $ npm run deploy
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+    Es wird einen neuen Branch mit dem Namen  `gh-pages` erstellt, und der Code von dem 'build'-Ordner da hochgeladen. 
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Das war's** Die App ist über GitHub Pages deployed auf die Adresse, die du im Schritt 5 hinzugefügt hast! :rocket:
+
+
+
+9. (Optional) Lade auch dein Quell-Code hoch bei GitHub
+
+
+    ```shell
+    $ git add .
+    $ git commit -m "Deine Nachricht"
+    $ git push origin main
+    ```
+
+  
+# Deine schon fertige React app deployen: 
+
+Wenn du schone ein Projekt hast, das du online stellen möchtest mache folgendes: 
+1. Mache es mit VS Code auf. Mach auch ein Terminal auf. 
+2. Arbeite durch Schritt 4, 5, und 6  oben.
+3. Wenn du schon eine Projekt hast, und es schon auf Git Hub ist, kannst du Schritt 7 überspringen. Wenn du den Remote von Projekt ändern möchstest, musst du auf GitHub ein neues Repo erstellen (Schritt 1) und dann den Remote von deinem lokalen Projekt ändern mit `git remote set-url origin <neue url>`. 
+4. Mache mit Schritt 8 weiter. 
+
+
+# References
+[Detalierte Anleitung (Englisch)](https://github.com/gitname/react-gh-pages/blob/master/README.md)
+
+
+1. [The official `create-react-app` deployment guide](https://create-react-app.dev/docs/deployment/#github-pages)
+2. [GitHub blog: Build and deploy GitHub Pages from any branch](https://github.blog/changelog/2020-09-03-build-and-deploy-github-pages-from-any-branch/)
+
